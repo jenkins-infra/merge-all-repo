@@ -12,7 +12,7 @@ if (args.length==0) {
 
 args.each { k ->
     println k;
-    def p = new ProcessBuilder("sh","-c","cd '${repo}' && git fetch --no-tags https://github.com/jenkinsci/${k}.git '+refs/heads/*:refs/heads/${k}/*' '+refs/tags/*:refs/tags/${k}/*'").redirectErrorStream(true).start()
+    def p = new ProcessBuilder(["sh","-c","cd '${repo}' && git fetch --no-tags https://github.com/jenkinsci/${k}.git '+refs/heads/*:refs/heads/${k}/*' '+refs/tags/*:refs/tags/${k}/*'"]).redirectErrorStream(true).start()
     p.in.eachLine { line -> println "  ${line}" }
     if (p.waitFor()!=0)
         System.exit(p.exitValue());
