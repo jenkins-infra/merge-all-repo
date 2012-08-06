@@ -3,6 +3,7 @@
 import org.kohsuke.github.*;
 
 def repo = new File(args[0])
+args.remove(0)
 if (!repo.isDirectory())
     throw new Error(repo.absolutePath+" doesn't exist")
 
