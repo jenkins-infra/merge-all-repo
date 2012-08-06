@@ -3,11 +3,12 @@
 import org.kohsuke.github.*;
 
 def repo = new File(args[0])
+args = args as List
 args.remove(0)
 if (!repo.isDirectory())
     throw new Error(repo.absolutePath+" doesn't exist")
 
-if (args.length==0) {
+if (args.size()==0) {
     args = GitHub.connect().getOrganization("jenkinsci").getRepositories().keySet()
 }
 
