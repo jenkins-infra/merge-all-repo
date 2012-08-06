@@ -9,7 +9,7 @@ if (!repo.isDirectory())
     throw new Error(repo.absolutePath+" doesn't exist")
 
 if (args.size()==0) {
-    args = GitHub.connect().getOrganization("jenkinsci").getRepositories().keySet()
+    args = GitHub.connectAnonymously().getOrganization("jenkinsci").getRepositories().keySet()
 }
 
 args.each { k ->
