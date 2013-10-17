@@ -15,12 +15,28 @@ if (args.size()==0) {
     Collections.shuffle(args);
 }
 
+def waitForUpToMinute(p) {
+    for (int i=0; i<60; i++) {
+        try {
+            if (p.exitValue()==0)
+                return;
+            else
+                System.exit(p.exitValue());
+        } catch (IllegalThreadStateException e) {
+            // hasn't finished yet
+            Thread.sleep(1000);
+            continue;
+        }
+    }
+    println "Taking too long. Moving on";
+    p.destroy();
+}
+
 args.each { k ->
     println k;
     def p = new ProcessBuilder(["sh","-c","cd '${repo}' && git fetch --no-tags https://github.com/jenkinsci/${k}.git '+refs/heads/*:refs/heads/${k}/*' '+refs/tags/*:refs/tags/${k}/*'"] as String[]).redirectErrorStream(true).start()
     p.in.eachLine { line -> println "  ${line}" }
-    if (p.waitFor()!=0)
-        System.exit(p.exitValue());
+    waitForUpToMinute(p);
 }
 
 
