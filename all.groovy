@@ -9,7 +9,10 @@ if (!repo.isDirectory())
     throw new Error(repo.absolutePath+" doesn't exist")
 
 if (args.size()==0) {
-    args = GitHub.connectAnonymously().getOrganization("jenkinsci").getRepositories().keySet()
+    // there are so many repositories to go through, and often we end up aborting in the middle
+    // randomize the order so that we even out the coverage
+    args = new ArrayList(GitHub.connectAnonymously().getOrganization("jenkinsci").getRepositories().keySet())
+    Collections.shuffle(args);
 }
 
 args.each { k ->
