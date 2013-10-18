@@ -35,7 +35,11 @@ def waitForUpToMinute(p) {
 args.each { k ->
     println k;
     def p = new ProcessBuilder(["sh","-c","cd '${repo}' && git fetch --no-tags https://github.com/jenkinsci/${k}.git '+refs/heads/*:refs/heads/${k}/*' '+refs/tags/*:refs/tags/${k}/*'"] as String[]).redirectErrorStream(true).start()
-    p.in.eachLine { line -> println "  ${line}" }
+    new Thread() {
+        public void run() {
+            p.in.eachLine { line -> println "  ${line}" }
+        }
+    }.start();
     waitForUpToMinute(p);
 }
 
