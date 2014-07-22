@@ -24,7 +24,7 @@ for (repo in gh.getOrganization("jenkinsci").listRepositories()) {
         def r = new ProcessBuilder('git', 'clone', "git@github.com:jenkinsci/${repo.name}.git").redirectOutput(ProcessBuilder.Redirect.INHERIT).start().waitFor();
         if (r != 0) {
             println('Failed!');
-            System.exit(1);
+            //System.exit(1);
         }
     }
 }
