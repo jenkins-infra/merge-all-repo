@@ -1,5 +1,5 @@
 #!/usr/bin/env groovy
-@Grab("org.kohsuke:github-api:1.29")
+@Grab("org.kohsuke:github-api:1.70")
 import org.kohsuke.github.*;
 
 def repo = new File(args[0])
